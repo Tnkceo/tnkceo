@@ -5,17 +5,23 @@ import schedule
 import requests
 from fbprophet import Prophet
 
-
 access = "your-access"
 secret = "your-secret"
-myToken = "xoxb-your-token"
 
 def post_message(token, channel, text):
-    """슬랙 메시지 전송"""
     response = requests.post("https://slack.com/api/chat.postMessage",
         headers={"Authorization": "Bearer "+token},
         data={"channel": channel,"text": text}
     )
+    print(response)
+ 
+myToken = "xoxb-3390465781637-3386827202886-AQ1dgvQwgfkS3mV3buH7HbA2"
+
+def dbgout(message):
+    """인자로 받은 문자열을 파이썬 셸과 슬랙으로 동시에 출력한다."""
+    print(datetime.now().strftime('[%m/%d %H:%M:%S]'), message)
+    strbuf = datetime.now().strftime('[%m/%d %H:%M:%S] ') + message
+    post_message(myToken,"#stock", strbuf) 
     
 def get_target_price(ticker, k):
     """변동성 돌파 전략으로 매수 목표가 조회"""
